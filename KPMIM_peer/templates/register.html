@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - KPMIM Peer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: skyblue;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        p a {
+            color: skyblue;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="input-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label>Role</label>
+                <div class="radio-group">
+                    <input type="radio" id="student" name="role" value="Student" required>
+                    <label for="student">Student</label>
+                    <input type="radio" id="mentor" name="role" value="Mentor" required>
+                    <label for="mentor">Mentor</label>
+                    <input type="radio" id="lecturer" name="role" value="Lecturer" required>
+                    <label for="lecturer">Lecturer</label>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="course">Course</label>
+                <select id="course" name="course" required>
+                    <option value="">Select a course</option>
+                    <option value="DCS">Diploma in Computer Science</option>
+                    <option value="DCD">Diploma in Creative Design</option>
+                    <option value="DIA">Diploma in Account</option>
+                    <option value="DEC">Diploma in English Communication</option>
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <button type="button" onclick="location.href='{% url 'main_page' %}'">Back to Home</button>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

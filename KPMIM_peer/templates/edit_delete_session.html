@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit or Delete Mentoring Sessions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            top: 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .container {
+            margin: 100px auto;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .session-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        button {
+            background-color: #3c8dbc;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #367fa9;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .back-button {
+            background-color: #3c8dbc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #367fa9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Edit or Delete Mentoring Sessions</h1>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <h2>Your Mentoring Sessions</h2>
+        {% for session in sessions %}
+            <div class="session-item">
+                <p><strong>Session ID:</strong> {{ session.ses_id }}</p>
+                <p><strong>Session Name:</strong> {{ session.ses_name }}</p>
+                <p><strong>Session Date:</strong> {{ session.ses_date }}</p>
+                <p><strong>Course:</strong> {{ session.course_id.course_name }}</p>
+                <button onclick="document.getElementById('edit-{{ session.ses_id }}').style.display='block'">Edit</button>
+                <button onclick="location.href='{% url 'delete_session' mentor.men_id session.ses_id %}'">Delete</button>
+
+                <div id="edit-{{ session.ses_id }}" style="display: noneSSss;">
+                    <h3>Edit Session</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="ses_id" value="{{ session.ses_id }}">
+                        <label for="ses_name">Session Name</label>
+                        <input type="text" name="ses_name" value="{{ session.ses_name }}" required>
+
+                        <label for="ses_date">Session Date</label>
+                        <input type="date" name="ses_date" value="{{ session.ses_date }}" required>
+
+                        <label for="course_id">Course</label>
+                        <select name="course_id" required>
+                            {% for course in courses %}
+                                <option value="{{ course.course_id }}" {% if course.course_id == session.course_id.course_id %}selected{% endif %}>{{ course.course_name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+
+        <a class="back-button" href="{% url 'mentor_profile' mentor.men_id %}">Back to Mentor Profile</a>
+    </div>
+
+    <footer>
+        <p>Contact Us: info@kpmim.edu.my | Phone: +60 123-456-789</p>
+    </footer>
+</body>
+</html>

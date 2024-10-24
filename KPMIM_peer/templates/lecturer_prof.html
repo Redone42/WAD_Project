@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            top: 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .profile-container {
+            margin: 100px auto;
+            max-width: 800px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .profile-header {
+            background-color: #3c8dbc;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .profile-header h1 {
+            font-size: 28px;
+            font-weight: 400;
+        }
+
+        .profile-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-body p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .profile-body button {
+            background-color: #3c8dbc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .profile-body button:hover {
+            background-color: #367fa9;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>{{ lecturer.lec_username }}</h1>
+        </div>
+        <div class="profile-body">
+            <p>Name: {{ lecturer.lec_name }}</p>
+            <p>ID: {{ lecturer.lec_id }}</p>
+            <p>Courses Taught: {{ lecturer.course_id.course_name }}</p>
+
+            <button onclick="location.href='{% url 'add_notes' lecturer.lec_id %}';">Add Note</button>
+            <button onclick="location.href='{% url 'list_and_delete_notes' lecturer.lec_id %}';">Delete Notes</button>
+        </div>
+    </div>
+    <footer>
+        <p>Contact Us: info@kpmim.edu.my | Phone: +60 123-456-789</p>
+    </footer>
+</body>
+</html>

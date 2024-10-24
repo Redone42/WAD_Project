@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            top: 0;
+            text-align: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .profile-container {
+            margin: 100px auto;
+            max-width: 800px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .profile-header {
+            background-color: #3c8dbc;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .profile-header h1 {
+            font-size: 28px;
+            font-weight: 400;
+        }
+        
+        .profile-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .profile-body p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        
+        .profile-body button {
+            background-color: #3c8dbc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .profile-body button:hover {
+            background-color: #367fa9;
+        }
+        
+        footer {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <!-- Display the student's username dynamically -->
+            <h1>{{ student.stud_username }}</h1>
+        </div>
+        <div class="profile-body">
+            <!-- Display the student data dynamically -->
+            <p>Name: {{ student.stud_name }}</p>
+            <p>ID: {{ student.stud_id }}</p>
+            <p>Course: {{ student.course_id.course_name }}</p> <!-- Display the course name dynamically -->
+            
+            <button onclick="location.href='{% url 'search_mentoring_sessions_student' student.stud_id %}'">Search Active Mentoring Session</button>
+            <button onclick="location.href='{% url 'search_notes_student' student.stud_id %}'">Search Notes</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact Us: info@kpmim.edu.my | Phone: +60 123-456-789</p>
+    </footer>
+</body>
+</html>

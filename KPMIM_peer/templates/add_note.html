@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Note</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            top: 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .note-container {
+            margin: 100px auto;
+            max-width: 800px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .note-header {
+            background-color: #3c8dbc;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .note-header h1 {
+            font-size: 28px;
+            font-weight: 400;
+        }
+
+        .note-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .note-body label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        .note-body input,
+        .note-body select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .note-body input[type="submit"] {
+            background-color: #3c8dbc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .note-body input[type="submit"]:hover {
+            background-color: #367fa9;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .message {
+            color: green;
+            margin: 10px 0;
+        }
+
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="note-container">
+        <div class="note-header">
+            <h1>Add Note</h1>
+        </div>
+        <div class="note-body">
+            {% if message %}
+                <p class="message">{{ message }}</p>
+            {% endif %}
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <label for="note_id">Note ID:</label>
+                <input type="text" id="note_id" name="note_id" required>
+
+                <label for="note_name">Note Name:</label>
+                <input type="text" id="note_name" name="note_name" required>
+
+                <label for="course_id">Course:</label>
+                <select id="course_id" name="course_id" required>
+                    {% for course in all_courses %}
+                        <option value="{{ course.course_id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="note_link">Note Link:</label>
+                <input type="url" id="note_link" name="note_link" required>
+
+                <input type="submit" value="Add Note">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact Us: info@kpmim.edu.my | Phone: +60 123-456-789</p>
+    </footer>
+</body>
+</html>
